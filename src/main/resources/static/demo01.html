@@ -1,0 +1,78 @@
+<html>
+
+<head>
+    <title>绘图</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/demo01.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<script src="js/jquery-1.11.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<body>
+    <!-- <div class="box" style="width: 100% ; height: 100%; background-color: aqua;"></div> -->
+    <div class="content">
+        <div id="leftDiv" style="flex: 1;background-color: bisque;"></div>
+        <div style="flex: 9; display: flex; flex-direction: column;">
+            <div id="topDiv" style="flex: 1;  position: relative;display: flex; flex-direction: row;">
+                <div id="buttonGroup" style="flex: 2; margin-left: 50px; margin-top: 15px; width: 100%;">
+                    <ul id="actionTabs" class="nav nav-pills" style="height: 100%;">
+                        <li id="drawLi" role="presentation" onclick="drawSeat()" class="active"><a href="#">画座位</a></li>
+                        <li id="codeLi" role="presentation" onclick="codeSeat()"><a href="#">编号</a></li>
+                        <li id="relaLi" role="presentation" onclick="relaSeat()"><a href="#">关联票价</a></li>
+                    </ul>
+                </div>
+                <div style="flex:1.5">                 
+                    <p class="bg-info">
+                        <li style="display: inline;">
+                            <ul> 行：<span id="px"></span></ul>
+                            <ul> 列：<span id="py"></span></ul>
+                        </li>
+                    </p>
+                </div>
+                <div style="flex: 1;">
+                    <p class="bg-info">
+                        <li style="display: inline;">
+                            <ul> 行号：<span id="lx"></span></ul>
+                            <ul> 列号：<span id="ly"></span></ul>
+                        </li>
+                    </p>
+                </div>
+                <div style="flex: 3;">
+                    <button id="subSeat" type="button" style="margin-left: 200px; margin-top: 15px;" class="btn btn-primary ">&nbsp&nbsp保存&nbsp&nbsp</button>
+                </div>
+            </div>
+            <div style="flex: 9;  display: flex; flex-direction: row; position: relative; ">
+                <div id="siteBox" style="flex: 9; position: relative; border: 0.3px dashed;overflow: scroll; ">
+                    <div
+                        style="height: 2000px;width: 2000px; position: absolute;text-align: center; line-height: 1500px;">
+                        <div class="seatBox">
+                            <div id="itemDivBox" style="position: relative;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1; position: relative; display: flex; flex-direction: column;">
+                    <div id="toolTitle" style="flex: 1; padding-bottom: 5px;">
+                        <p class="bg-primary" style="height: 100%; text-align: center;padding: 5px;">画座位</p>
+                    </div>
+                    <div id="toolMenu" style="flex: 18;">
+                        <ul id="drawImgTabs" class="nav nav-pills nav-stacked">
+                            <li role="presentation" class="active"><a href="#" onclick="drawChange('seat')">&nbsp&nbsp座位</a></li>
+                            <li role="presentation"><a href="#" onclick="drawChange('desk1')">&nbsp&nbsp桌子左上</a></li>
+                            <li role="presentation"><a href="#" onclick="drawChange('desk2')">&nbsp&nbsp桌子左下</a></li>
+                            <li role="presentation"><a href="#" onclick="drawChange('desk3')">&nbsp&nbsp桌子右上</a></li>
+                            <li role="presentation"><a href="#" onclick="drawChange('desk4')">&nbsp&nbsp桌子右下</a></li>
+                        </ul>
+                    </div>
+                    
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+<script src="js/demo01.js"></script>
+</html>

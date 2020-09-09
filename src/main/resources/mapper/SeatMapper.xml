@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.SeatMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.entity.Seat">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="venue_id" property="venueId" jdbcType="VARCHAR"/>
+        <result column="price_id" property="priceId" jdbcType="VARCHAR"/>
+        <result column="postion_x" property="positionX" jdbcType="VARCHAR"/>
+        <result column="position_y" property="positionY" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="VARCHAR"/>
+        <result column="color" property="color" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectAllSeatByVenue" resultMap="BaseResultMap">
+        select seat.*,tc.price ,tc.color from seat left join ticket_category tc on seat.price_id = tc.id where seat.venue_id = #{venueId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteVenueSeat" parameterType="java.lang.String">
+        delete from seat where  venue_id =  #{venueId,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insertSeat" parameterType="com.example.demo.entity.Seat">
+        insert into seat
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="venueId != null">
+                venue_id,
+            </if>
+            <if test="priceId != null">
+                price_id,
+            </if>
+            <if test="positionX != null">
+                postion_x,
+            </if>
+            <if test="positionY != null">
+                position_y,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="venueId != null">
+                #{venueId,jdbcType=VARCHAR},
+            </if>
+            <if test="priceId != null">
+                #{priceId,jdbcType=VARCHAR},
+            </if>
+            <if test="positionX != null">
+                #{positionX,jdbcType=VARCHAR},
+            </if>
+            <if test="positionY != null">
+                #{positionY,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

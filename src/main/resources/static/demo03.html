@@ -1,0 +1,157 @@
+<html>
+
+<head>
+  <title>绘图</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/demo03.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<script src="js/jquery-1.11.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<body>
+<div class="content">
+  <div style="flex: 9; display: flex; flex-direction: column;">
+    <div id="topDiv" style="flex: 1;  position: relative;display: flex; flex-direction: row;">
+      <button type="button" class="btn btn-default" onclick="test()" data-toggle="tooltip" data-placement="bottom"
+              title="底部的 Tooltip">底部的 Tooltip
+      </button>
+      <button type="button" class="btn btn-secondary" data-toggle="tooltip"
+              title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+        Tooltip with HTML
+      </button>
+
+    </div>
+    <div style="flex: 9;  display: flex; flex-direction: row; position: relative; ">
+      <div id="siteBox" style="flex: 9; position: relative; border: 0.3px dashed;overflow: scroll; ">
+        <div style="height: 2000px;width: 2000px; position: absolute;text-align: center; line-height: 1500px;">
+          <div class="seatBox">
+            <div id="itemDivBox" style="position: relative;"></div>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 2; position: relative; display: flex; flex-direction: column;border-top: 0.3px dashed">
+        <div style="flex: 10;">
+          <ul id="myTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab"
+                                                      aria-controls="home" aria-expanded="true">购票指南</a></li>
+            <li role="presentation" class=""><a href="#profile" role="tab" id="profile-tab" data-toggle="tab"
+                                                aria-controls="profile" aria-expanded="false">已选票品</a></li>
+          </ul>
+          <div id="myTabContent" class="tab-content" style="height:500px;overflow-y: auto;">
+            <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+              <div style="text-align: center;margin-top: 5px;">普通票品</div>
+              <div id="priceTipBox">
+
+              </div>
+              <!--<div style="background-color:white ;padding: 5px 10px 5px 10px;">
+                  <span class="glyphicon glyphicon-bookmark" style="color:red ;font-size: 24px; left: 20px; " aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-usd" style="color: black; top:-4px;left: 30px;" aria-hidden="true">400元</span>
+              </div>
+              <div style="background-color:white;padding: 5px 10px 5px 10px;">
+                  <span class="glyphicon glyphicon-bookmark" style="color:blue ;font-size: 24px; left: 20px; " aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-usd" style="color: black; top:-4px;left: 30px;" aria-hidden="true">592元</span>
+              </div>-->
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
+              <!--<div class="order">
+                <div style="background-color:rgb(205, 205, 205);height: 100%;width: 100%;position: relative;;">
+                  <span style="left:230px;top:5px;position: absolute; color: #777;font-size: 18px;"
+                        class="glyphicon glyphicon-remove-circle" onmouseover="closeStyle(this)"
+                        onmouseout="backStyle(this)" aria-hidden="true"></span>
+                  <div
+                          style="height: 18px;width: 18px; background-color: red; border-radius: 50%; position: absolute; top: 10px; left: 20px;">
+                  </div>
+                  <span class="glyphicon glyphicon-usd" style="color: black; position: absolute;top: 14px;left: 66px;"
+                        aria-hidden="true">400元</span>
+                  <span style="position: absolute;top: 49px;left: 19px;">座位编码：A12B20</span>
+                </div>
+              </div>
+              <div class="order">
+                <div style="background-color:rgb(205, 205, 205);height: 100%;width: 100%;position: relative;;">
+                  <span style="left:230px;top:5px;position: absolute; color: #777;font-size: 18px;"
+                        class="glyphicon glyphicon-remove-circle" onmouseover="closeStyle(this)"
+                        onmouseout="backStyle(this)" aria-hidden="true"></span>
+                  <div
+                          style="height: 18px;width: 18px; background-color: red; border-radius: 50%; position: absolute; top: 10px; left: 20px;">
+                  </div>
+                  <span class="glyphicon glyphicon-usd" style="color: black; position: absolute;top: 14px;left: 66px;"
+                        aria-hidden="true">400元</span>
+                  <span style="position: absolute;top: 49px;left: 19px;">座位编码：A12B20</span>
+                </div>
+              </div>-->
+              <!-- <div class="order">
+                <div style="background-color:rgb(205, 205, 205);height: 100%;width: 100%;position: relative;;">
+                  <span style="left:230px;top:5px;position: absolute; color: #777;"
+                    class="glyphicon glyphicon-remove-circle" onmouseover="closeStyle(this)"
+                    onmouseout="backStyle(this)" aria-hidden="true"></span>
+                  <div
+                    style="height: 18px;width: 18px; background-color: red; border-radius: 50%; position: absolute; top: 10px; left: 20px;">
+                  </div>
+                  <span class="glyphicon glyphicon-usd" style="color: black; position: absolute;top: 14px;left: 66px;"
+                    aria-hidden="true">400元</span>
+                  <span style="position: absolute;top: 49px;left: 19px;">座位编码：A12B20</span>
+                </div>
+              </div>
+              <div class="order">
+                <div style="background-color:rgb(205, 205, 205);height: 100%;width: 100%;position: relative;;">
+                  <span style="left:230px;top:5px;position: absolute; color: #777;"
+                    class="glyphicon glyphicon-remove-circle" onmouseover="closeStyle(this)"
+                    onmouseout="backStyle(this)" aria-hidden="true"></span>
+                  <div
+                    style="height: 18px;width: 18px; background-color: red; border-radius: 50%; position: absolute; top: 10px; left: 20px;">
+                  </div>
+                  <span class="glyphicon glyphicon-usd" style="color: black; position: absolute;top: 14px;left: 66px;"
+                    aria-hidden="true">400元</span>
+                  <span style="position: absolute;top: 49px;left: 19px;">座位编码：A12B20</span>
+                </div>
+              </div>
+              <div class="order">
+                <div style="background-color:rgb(205, 205, 205);height: 100%;width: 100%;position: relative;;">
+                  <span style="left:230px;top:5px;position: absolute; color: #777;" class="glyphicon glyphicon-remove-circle" onmouseover="closeStyle(this)" onmouseout="backStyle(this)" aria-hidden="true"></span>
+                  <div style="height: 18px;width: 18px; background-color: red; border-radius: 50%; position: absolute; top: 10px; left: 20px;"> </div>
+                  <span class="glyphicon glyphicon-usd" style="color: black; position: absolute;top: 14px;left: 66px;" aria-hidden="true">400元</span>
+                  <span style="position: absolute;top: 49px;left: 19px;">座位编码：A12B20</span>
+                </div>
+              </div>
+              <div class="order">
+                <div style="background-color:rgb(205, 205, 205);height: 100%;width: 100%;position: relative;;">
+                  <span style="left:230px;top:5px;position: absolute; color: #777;" class="glyphicon glyphicon-remove-circle" onmouseover="closeStyle(this)" onmouseout="backStyle(this)" aria-hidden="true"></span>
+                  <div style="height: 18px;width: 18px; background-color: red; border-radius: 50%; position: absolute; top: 10px; left: 20px;"></div>
+                  <span class="glyphicon glyphicon-usd" style="color: black; position: absolute;top: 14px;left: 66px;" aria-hidden="true">400元</span>
+                  <span style="position: absolute;top: 49px;left: 19px;">座位编码：A12B20</span>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div style="flex: 2;border-top: 0.3px dashed;display: flex;flex-direction: column;">
+          <div style=" flex: 1;background-color: aqua;">
+            已选票数:<span id="orderNumSum"></span>
+            总计：<span id="orderPriceSum"></span>
+          </div>
+          <div style="flex: 1;">
+            <div class="btn-group btn-group-justified" style="height: 100%;" role="group"
+                 aria-label="Justified button group">
+              <a href="#" id="disCountOrder" class="btn btn-warning" style="background: rgb(204, 204, 204); border: 0px;" role="button" disabled="disabled">折扣下单</a>
+              <a href="#" id="nowOrder" class="btn btn-danger" style="background: rgb(153, 153, 153); border: 0px;" role="button" disabled="disabled">立即下单</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script src="js/demo03.js"></script>
+
+<style>
+  .order {
+    height: 100px;
+    width: 100%;
+    padding: 5px;
+  }
+</style>
+
+</html>

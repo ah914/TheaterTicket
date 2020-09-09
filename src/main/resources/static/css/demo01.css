@@ -1,0 +1,110 @@
+*{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.content{
+    height: 100%;
+    width: 100%;
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: row ;
+}
+
+.seatBox{
+    display: flex;
+    flex: 1 1 0%;
+    flex-direction: row;
+    justify-content: center;
+    /* padding: 20px; */
+    display: block;
+    position: absolute;
+}
+
+.itemDiv{
+    display: block;
+    position: relative;
+    width: 30px;
+    /* display: inline-block; */
+    height: 30px;
+    border: 1px solid rgb(204, 204, 204);
+    /* margin: -1px -2.5px -1px -2.5px; */
+    margin: -1px 0px -1px 0px;
+    float: left;
+    -webkit-box-sizing: unset !important;
+    box-sizing: unset !important;
+}
+
+.hasSeat{
+    background-color: #999;
+    height: 31px;
+    width: 30px;
+    display: block;
+}
+
+.panel{
+    margin-bottom: 0px !important;
+}
+
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td {
+    margin: 0;
+    padding: 0
+}
+
+html {
+    color: #000;
+    overflow-y: scoll;
+    overflow: -moz-scrollbars-vertical
+}
+
+.div {
+    position: absolute;
+    /* border: 1px dashed blue; */
+    /* width: 0px;
+    height: 0px; */
+    /* left: 0px;
+    top: 0px; */
+    /* overflow: hidden; */
+}
+
+.retc {
+    position: absolute;
+    border: 1px solid #CCCCCC;
+    overflow: hidden;
+    background: #EFEFEF;
+}
+
+a {
+    text-decoration: none;
+}

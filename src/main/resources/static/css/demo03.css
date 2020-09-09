@@ -1,0 +1,47 @@
+.content{
+    height: 100%;
+    width: 100%;
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: row ;
+}
+
+
+.seatBox{
+    display: flex;
+    flex: 1 1 0%;
+    flex-direction: row;
+    justify-content: center;
+    /* padding: 20px; */
+    display: block;
+    position: absolute;
+}
+
+.itemDiv{
+    display: block;
+    position: relative;
+    width: 30px;
+    /* display: inline-block; */
+    height: 30px;
+    /* border: 1px solid rgb(204, 204, 204); */
+    /* margin: -1px -2.5px -1px -2.5px; */
+    margin: -1px 0px -1px 0px;
+    float: left;
+    -webkit-box-sizing: unset !important;
+    box-sizing: unset !important;
+}
+
+.hasSeat{
+    background-color: red;
+    height: 31px;
+    width: 30px;
+    display: block;
+}
+
+.tooltip {
+    opacity: 0.7 !important;
+}
+
+P{
+    text-align: left;
+}

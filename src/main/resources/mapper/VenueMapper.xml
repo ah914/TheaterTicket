@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.VenueMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.entity.Venue">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="start_x" property="startX" jdbcType="VARCHAR"/>
+        <result column="start_y" property="startY" jdbcType="VARCHAR"/>
+        <result column="end_x" property="endX" jdbcType="VARCHAR"/>
+        <result column="end_y" property="endY" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectVenueById" resultMap="BaseResultMap">
+        select * from venue where id = #{venueId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteVenueById" parameterType="java.lang.String">
+        delete from venue where  id =  #{venueId,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insertVenue" parameterType="com.example.demo.entity.Venue">
+        insert into venue
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="startX != null">
+                start_x,
+            </if>
+            <if test="startY != null">
+                start_y,
+            </if>
+            <if test="endX != null">
+                end_x,
+            </if>
+            <if test="endY != null">
+                end_y,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="startX != null">
+                #{startX,jdbcType=VARCHAR},
+            </if>
+            <if test="startY != null">
+                #{startY,jdbcType=VARCHAR},
+            </if>
+            <if test="endX != null">
+                #{endX,jdbcType=VARCHAR},
+            </if>
+            <if test="endY != null">
+                #{endY,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>
