@@ -24,4 +24,6 @@ public interface TestService {
     public List<Seat> getAllSeat(String venueId);
 
     public Venue getVenueById(String id) ;
+
+    public Object generator();
 }

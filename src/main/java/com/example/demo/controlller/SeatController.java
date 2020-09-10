@@ -39,4 +39,9 @@ public class SeatController {
         venue.setSeats(allSeat);
         return venue ;
     }
+
+    @RequestMapping("generator")
+    public Object generator(){
+        return testService.generator();
+    }
 }
