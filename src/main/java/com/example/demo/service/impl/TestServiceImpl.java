@@ -97,4 +97,10 @@ public class TestServiceImpl implements TestService {
                 .andNumberIsNull();
         return seat1Mapper.selectByExample(seatExample);
     }
+
+    public static void main(String[] args) {
+        int num = Integer.valueOf("11", 36);
+        System.out.println(num);
+//        System.out.println(Character.MAX_RADIX);
+    }
 }

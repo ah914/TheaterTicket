@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <title>票价管理</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+     <script>
+         // alert(encodeURI(location.href.split('#')[0]));
+         wx.config({
+             debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+             appId: 'wx5a8a62bc1e22e8d0', // 必填，公众号的唯一标识
+             timestamp: 1607484193, // 必填，生成签名的时间戳
+             nonceStr: 'Wm3WZYTPz0wzccnA', // 必填，生成签名的随机串
+             signature: '1dc6fbe1b75fbcfb8dbe393b3d0f0be33a09b73d',// 必填，签名
+             jsApiList: ["openLocation","getLocation"] // 必填，需要使用的JS接口列表
+         });
+         wx.ready(function(){
+             // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+             console.log("AAAAAAAA");
+
+
+             wx.getLocation({
+                 // type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                 type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                 success: function (res) {
+                     var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                     var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                     var speed = res.speed; // 速度，以米/每秒计
+                     var accuracy = res.accuracy; // 位置精度
+
+                     wx.openLocation({
+                         latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
+                         longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
+                         name: '', // 位置名
+                         address: '', // 地址详情说明
+                         scale: 10, // 地图缩放级别,整形值,范围从1~28。默认为最大
+                         infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+                     });
+                 }
+             });
+         });
+         wx.error(function(res){
+             // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+             console.log("BBBBBBBB");
+         });
+     </script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=0069dcbc414f28034813ee465eea91c1"></script>
+    <script type="text/javascript">
+        var map = new AMap.Map('container');
+        var map = new AMap.Map('container', {
+            zoom:11,//级别
+            center: [116.397428, 39.90923],//中心点坐标
+            viewMode:'2D'//使用3D视图
+        });
+    </script>
+</head>
+
+<body>
+
+<div id="container"></div>
+
+<div>
+    <table class="table table-sm table-dark">
+        <thead>
+        <tr>
+            <th scope="col">序号</th>
+            <th scope="col">名称</th>
+            <th scope="col">价格（元）</th>
+            <th scope="col">颜色</th>
+        </tr>
+        </thead>
+        <tbody id="priceBody">
+        <!--<tr>
+            <th scope="row">1</th>
+            <td>一级票</td>
+            <td>99</td>
+            <td><input type="color" name="color" onchange="changeColorTd(this)"></td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>二机票</td>
+            <td>88</td>
+            <td><input type="color" name="color" onchange="changeColorTd(this)"></td>
+        </tr>
+        <tr>
+        </tr>-->
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <button onclick="addPrice()">添加价格</button>
+    <button onclick="submitPrice()">保存</button>
+</div>
+
+<div id="priceForm">
+    <div class="itemInput">
+        价格类型：<input type="text" id="priceName" name="priceName">
+    </div>
+    <div class="itemInput">
+        价格(元)：<input type="number" id="priceNum" name="priceNum">
+    </div>
+    <div class="itemInput">
+        <input type="submit" onclick="submit()" style="margin-left: 50px;">
+        <button style="margin-left: 120px;" onclick="quit()">取消</button>
+    </div>
+
+</div>
+<!-- <input type="color" name="color" id="color" onchange="changeColor()"> //选择颜色的标签，type="color" -->
+<!-- <span id="colorInfo"></span> -->
+</body>
+
+<style type="text/css">
+
+    #container {width:300px; height: 180px; }
+
+    #priceForm {
+        display: none;
+        opacity: 0.9;
+        width: 500px;
+        height: 300px;
+        background-color: #999;
+        z-index: 2;
+        position: absolute;
+        top: 100px;
+        left: 500px;
+    }
+
+    .itemInput {
+        margin-top: 49px;
+        margin-left: 100px;
+    }
+</style>
+
+<script type="text/javascript">
+
+    let priceArr = [];
+    $.ajax({
+        url: "/price/all",
+        type: "post",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            console.log(result);
+            priceArr = result;
+            for (let i = 0; i < priceArr.length; i++) {
+                formContent(priceArr[i].name, priceArr[i].price, priceArr[i].color);
+            }
+        }
+    })
+
+    function changeColorTd(elem) {
+        let trDom = elem.parentNode.parentNode;
+        trDom.style.color = "white";
+        trDom.style.backgroundColor = elem.value;
+        let nameTd = trDom.children[1];
+        console.log(nameTd.innerHTML)
+        let checkedPriceArr = priceArr.filter(item => {
+            if (item.name == nameTd.innerHTML) {
+                return true
+            }
+        })
+
+        checkedPriceArr[0].color = elem.value;
+    }
+
+    function addPrice() {
+        document.getElementById("priceForm").style.display = "block";
+    }
+
+    function submit() {
+        document.getElementById("priceForm").style.display = "none";
+        let name = $("#priceName").val();
+        let num = $("#priceNum").val();
+        let priceItem = {};
+        priceItem.name = name;
+        priceItem.price = num;
+        priceArr.push(priceItem);
+        formContent(name, num, null);
+    }
+
+    function formContent(name, num, color) {
+        let trStyle = '<tr>';
+        if (color != null) {
+            trStyle = '<tr style="background-color: ' + color + ';color: white">'
+        }
+        let content = trStyle +
+            '                    <th scope="row">#</th>' +
+            '                    <td>' + name + '</td>' +
+            '                    <td>' + num + '</td>' +
+            '                    <td><input type="color" name="color" value="' + color + '" onchange="changeColorTd(this)"></td>' +
+            '                </tr>';
+        $("#priceBody").append(content);
+    }
+
+    function quit() {
+        document.getElementById("priceForm").style.display = "none";
+    }
+
+    function submitPrice() {
+        console.log(priceArr);
+        $.ajax({
+            url: "/price/add",
+            type: "post",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(priceArr),
+            success: function (result) {
+                console.log(result); //  2pm
+            }
+        })
+    }
+</script>
+
+</html>

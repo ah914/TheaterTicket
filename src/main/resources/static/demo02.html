@@ -3,163 +3,182 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>票价管理</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!--<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <title>电子导览</title>
     <script src="js/jquery-1.11.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: #dddddd;
+        }
+        #container{
+            width: 100%;
+            height: 95%;
+            background-color: #dddddd;
+        }
+        .markFont{
+            font-family: sans-serif;
+            color: blue;
+            font-size: 16px;
+            font-weight: bold;
+            padding-bottom: 10px;
+        }
+        #panel {
+            position: fixed;
+            background-color: white;
+            max-height: 90%;
+            overflow-y: auto;
+            top: 10px;
+            right: 10px;
+            width: 280px;
+        }
+    </style>
 </head>
 
 <body>
-    <div>
-        <table class="table table-sm table-dark">
-            <thead>
-                <tr>
-                    <th scope="col">序号</th>
-                    <th scope="col">名称</th>
-                    <th scope="col">价格（元）</th>
-                    <th scope="col">颜色</th>
-                </tr>
-            </thead>
-            <tbody id="priceBody">
-                <!--<tr>
-                    <th scope="row">1</th>
-                    <td>一级票</td>
-                    <td>99</td>
-                    <td><input type="color" name="color" onchange="changeColorTd(this)"></td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>二机票</td>
-                    <td>88</td>
-                    <td><input type="color" name="color" onchange="changeColorTd(this)"></td>
-                </tr>
-                <tr>
-                </tr>-->
-            </tbody>
-        </table>
-    </div>
 
-    <div>
-        <button onclick="addPrice()">添加价格</button>
-        <button onclick="submitPrice()">保存</button>
-    </div>
-
-    <div id="priceForm">
-        <div class="itemInput">
-            价格类型：<input type="text" id="priceName" name="priceName">
-        </div>
-        <div class="itemInput">
-            价格(元)：<input type="number" id="priceNum" name="priceNum">
-        </div>
-        <div class="itemInput">
-            <input type="submit" onclick="submit()" style="margin-left: 50px;">
-            <button style="margin-left: 120px;" onclick="quit()">取消</button>
-        </div>
-
-    </div>
-    <!-- <input type="color" name="color" id="color" onchange="changeColor()"> //选择颜色的标签，type="color" -->
-    <!-- <span id="colorInfo"></span> -->
+<div id="container"></div>
+<div id="panel"></div>
+<embed src="output.mp3"/>
+<object data="output.mp3"></object>
+<button onclick="chageSate(1)">景区景点</button>
+<button onclick="chageSate(2)">厕所</button>
+<button onclick="chageSate(3)">停车场</button>
+<!--<button onclick="changebak()" style="background-color: blue;color: white">？？？？？？</button>-->
 </body>
 
-<style type="text/css">
-    #priceForm {
-        display: none;
-        opacity: 0.9;
-        width: 500px;
-        height: 300px;
-        background-color: #999;
-        z-index: 2;
-        position: absolute;
-        top: 100px;
-        left: 500px;
-    }
 
-    .itemInput {
-        margin-top: 49px;
-        margin-left: 100px;
-    }
-</style>
+<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=0069dcbc414f28034813ee465eea91c1&plugin=AMap.Driving"></script>
+<!--<script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js">-->
 
-<script type="text/javascript">
+</script><script type="text/javascript">
+    let mapObj = new AMap.Map('container', {
+        center:new AMap.LngLat(119.564995,35.433897), //地图中心点
+        level:11  //地图显示的比例尺级别
+    });
+    mapObj.add(new AMap.TileLayer.Satellite());
+    /*var groundImageOpts = { map : mapObj ,clickable : true ,opacity : 1};
+    var bounds = new AMap.Bounds(new AMap.LngLat(118.055005,24.435624),new AMap.LngLat(118.078351,24.454299));
+    new AMap.GroundImage('image/test001.jpg',bounds,groundImageOpts);
 
-    let priceArr = [];
-    $.ajax({
-        url:"/price/all",
-        type: "post",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (result) {
-            console.log(result);
-            priceArr = result ;
-            for (let i = 0; i < priceArr.length; i++) {
-                formContent(priceArr[i].name,priceArr[i].price,priceArr[i].color);
-            }
-        }
+    function chageSate() {
+        map.add(new AMap.TileLayer.Satellite());
+    }*/
+    mapObj.on('click',function(e){
+        console.log(e.lnglat.getLng());
+        console.log(e.lnglat.getLat());
     })
-
-    function changeColorTd(elem) {
-        let trDom = elem.parentNode.parentNode;
-        trDom.style.color = "white";
-        trDom.style.backgroundColor = elem.value;
-        let nameTd = trDom.children[1];
-        console.log(nameTd.innerHTML)
-        let checkedPriceArr = priceArr.filter(item => {
-            if (item.name == nameTd.innerHTML) {
-                return true
-            }
-        })
-
-        checkedPriceArr[0].color = elem.value ;
+    // addCircle();
+    function addCircle() {
+        circle = new AMap.Circle({
+            center:new AMap.LngLat("116.403322","39.920255"),// 圆心位置
+            radius:10000, //半径
+            strokeColor: "#F33", //线颜色
+            strokeOpacity: 1, //线透明度
+            strokeWeight: 3, //线粗细度
+            fillColor: "#ee2200", //填充颜色
+            fillOpacity: 0.35//填充透明度
+        });
+        circle.setMap(mapObj);
+    }
+    xmMap()
+    function xmMap(){
+        mapObj.setZoom(15);
+        let bounds = new AMap.Bounds(new AMap.LngLat(119.561776,35.432831), new AMap.LngLat(119.567398,35.434483)),
+            // 116.397428 - 0.2660   + 0.10686,  39.90923 + 10686 - 2660
+             groundImageOpts = {
+                opacity: 1,   //图片透明度
+                clickable: true,//图片相应鼠标点击事件，默认：false
+                map: mapObj     //图片叠加的地图对象
+            };
+        //实例化一个图片覆盖物对象
+        // let groundImage = new AMap.GroundImage('image/test001.jpg', bounds, groundImageOpts);
+        // setTimeout(function(){
+        //     mapObj.setCenter(new AMap.LngLat(118.067665,24.443946));
+        // },500);
+        //mapObj.setCenter(new AMap.LngLat(118.067665,24.443946));
+    }
+    function changebak(){
+        console.log("aa");
+        mapObj.clearMap();
+        mapObj.setZoom(15);
+        let bounds = new AMap.Bounds(new AMap.LngLat(116.394766,39.91000), new AMap.LngLat(116.428033,39.94095)),
+            // 116.397428 - 0.2660   + 0.10686,  39.90923 + 10686 - 2660
+            groundImageOpts = {
+                opacity: 1,   //图片透明度
+                clickable: true,//图片相应鼠标点击事件，默认：false
+                map: mapObj     //图片叠加的地图对象
+            };
+        //实例化一个图片覆盖物对象
+        let groundImage = new AMap.GroundImage('image/lxh.jpg', bounds, groundImageOpts);
     }
 
-    function addPrice() {
-        document.getElementById("priceForm").style.display = "block";
-    }
-
-    function submit() {
-        document.getElementById("priceForm").style.display = "none";
-        let name = $("#priceName").val();
-        let num = $("#priceNum").val();
-        let priceItem = {};
-        priceItem.name = name;
-        priceItem.price = num;
-        priceArr.push(priceItem);
-        formContent(name,num,null);
-    }
-
-    function formContent(name,num,color) {
-        let trStyle = '<tr>' ;
-        if(color!=null){
-            trStyle = '<tr style="background-color: '+color+';color: white">'
+    function chageSate(option) {
+        let allMarkers = mapObj.getAllOverlays('marker');
+        console.log(allMarkers);
+        mapObj.remove(allMarkers);
+        switch (option) {
+            case 1 :
+                mark('image/icons8-house-50.png',116.410474,39.923054,"中国美术馆");
+                mark('image/icons8-house-50.png',116.417724,39.91696,"灯口市");
+                mark('image/icons8-house-50.png',116.39722,39.92568,"景山公园");
+                break ;
+            case 2:
+                mark('image/icons8-wc-50.png',116.418628,39.929225,"");
+                mark('image/icons8-wc-50.png',116.422147,39.930574,"");
+                mark('image/icons8-wc-50.png',116.408629,39.928205,"");
+                break;
+            case 3 :
+                mark('image/icons8-car-50.png',116.425151,39.925572,"");
+                mark('image/icons8-car-50.png',116.42661,39.919747,"");
+                mark('image/icons8-car-50.png',116.41189,39.915731,"");
+                break;
         }
-        let content = trStyle+
-            '                    <th scope="row">#</th>' +
-            '                    <td>' + name + '</td>' +
-            '                    <td>' + num + '</td>' +
-            '                    <td><input type="color" name="color" value="'+color+'" onchange="changeColorTd(this)"></td>' +
-            '                </tr>';
-        $("#priceBody").append(content);
+
     }
 
-    function quit() {
-        document.getElementById("priceForm").style.display = "none";
+
+    function mark(iconUrl,lgn,lat,content) {
+        let marker = new AMap.Marker({
+            icon: iconUrl,
+            // position: [116.411032, 39.923499],
+            position: [lgn, lat],
+            content:'<img src="'+iconUrl+'"><label class="markFont">'+content+'</label>'
+        });
+        mapObj.add(marker);
     }
 
-    function submitPrice() {
-        console.log(priceArr);
-        $.ajax({
-            url:"/price/add",
-            type: "post",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(priceArr),
-            success: function (result) {
-                console.log(result); //  2pm
-            }
-        })
+    var driving = new AMap.Driving({
+        map: mapObj,
+        // panel: "panel"
+    });
+    let opts ={
+        waypoints:[
+            new AMap.LngLat(119.564847,35.433855)
+            ,new AMap.LngLat(119.562449,35.433838)
+            ,new AMap.LngLat(119.561982,35.433597)
+            ,new AMap.LngLat(119.562578,35.433414)
+            ,new AMap.LngLat(119.562573,35.433007)
+
+        ]
     }
+    // 根据起终点经纬度规划驾车导航路线
+    driving.search(new AMap.LngLat(119.565076, 35.434285), new AMap.LngLat(119.566397, 35.433392), opts ,   function(status, result) {
+        // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+        if (status === 'complete') {
+            log.success('绘制驾车路线完成')
+        } else {
+            log.error('获取驾车数据失败：' + result)
+            console.log(result);
+        }
+    });
+
+
+
 </script>
 
 </html>
